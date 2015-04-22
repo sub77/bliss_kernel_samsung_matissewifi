@@ -1,3 +1,5 @@
+#s3ve3g-matissewifi no build error / sec_battery
+
 # SSWAP
 CONFIG_SWAP=y
 CONFIG_FRONTSWAP=y
