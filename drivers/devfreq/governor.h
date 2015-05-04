@@ -21,7 +21,7 @@
 /* Devfreq events */
 #define DEVFREQ_GOV_START			0x1
 #define DEVFREQ_GOV_STOP			0x2
-#define DEVFREQ_GOV_INTERVAL			0x3
+#define DEVFREQ_GOV_INTERVAL		0x3
 #define DEVFREQ_GOV_SUSPEND			0x4
 #define DEVFREQ_GOV_RESUME			0x5
 
@@ -39,4 +39,8 @@ extern int devfreq_add_governor(struct devfreq_governor *governor);
 extern int devfreq_remove_governor(struct devfreq_governor *governor);
 
 extern int devfreq_get_freq_level(struct devfreq *devfreq, unsigned long freq);
+extern int devfreq_policy_add_files(struct devfreq *devfreq,
+				    struct attribute_group attr_group);
+extern void devfreq_policy_remove_files(struct devfreq *devfreq,
+					struct attribute_group attr_group);
 #endif /* _GOVERNOR_H */
