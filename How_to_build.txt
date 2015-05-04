@@ -1,0 +1,49 @@
+Here is a short summary  for anyone that wants to try compiling their own kernel.
+Personally I found Ubuntu Mint 14 a good base for this, since it was easy to get working on a virtaul machine.
+The linux environment will also need some initial setup before it is ready to compile.
+
+run this command to install some needed packages:
+sudo apt-get install -y build-essential kernel-package libncurses5-dev bzip2
+
+Some toolchains will require that you have the libisl.so.13 installed. To do so, you need to edit your /etc/apt/sources.list and add these lines:
+	deb http://ftp.debian.org/debian experimental main contrib non-free
+	deb-src http://ftp.debian.org/debian experimental main contrib non-free
+Then do an "apt-get update"
+followed by "apt-get install libisl13"
+If you get another error about missimg libcloog-isl4, then try this: "apt-get install libcloog-isl4"
+
+
+Currently the Makefile is set to use the Sabermod 4.9 graphite toolchain, so you will need this toolchain.
+Look in the Makefile for the correct folder location or edit if you want to change it to a different toolchain.
+The toolchain I did use can be found from here: https://github.com/kecinzer/sm-arm-eabi-4.9
+Additionally you will need a set of tools, like the dbToolCM to create the dt.img file, 
+and the mkbootimg to create your boot.img file. 
+You will also need the split_boot script tool to extract a ramdisk from a working boot.img
+Here you might find a working set of tools:
+http://forum.xda-developers.com/showthread.php?t=2319018
+
+
+Open a terminal in the source folder and apply the following commands:
+sudo su
+make clean && make mrproper
+make ARCH=arm msm8226-sec_defconfig VARIANT_DEFCONFIG=msm8226-sec_matissewifi_defconfig
+make arch=arm
+./dtbToolCM -2 -o ~/dt_files/dt.img -s 2048 -p ./scripts/dtc/ ./arch/arm/boot/
+
+
+If the dbToolCM command fails, make sure you have the /dt_files folder. If not, create it or specify another output 
+folder of your wish. Then retry.
+The dbToolCM will output a file, dt.img. Copy this to a folder of choice. 
+Also copy the file /arch/arm/boot/zImage to the same folder folder.
+You will need a ramdisk file, initrd.img. For this you need to use an existing boot.img file and split it using the 
+split_boot script. That script will create a boot folder, and you will see a file named boot.img-ramdisk.cpio.gz. 
+Just rename that file to initrd.img and copy it to your folder.
+
+
+Open a terminal in the folder you choose above and apply the following command:
+
+./mkbootimg --base 0x00000000 --kernel zImage --ramdisk_offset 0x02000000 --tags_offset 0x01E00000 --pagesize 2048 --cmdline "androidboot.hardware=qcom user_debug=31 maxcpus=2 msm_rtb.filter=0x3F ehci-hcd.park=3 msm_rtb.enable=0 lpj=192598 dwc3.maximum_speed=high dwc3_msm.prop_chg_detect=Y" --ramdisk initrd.img --dt dt.img -o boot.img
+
+
+If all goes well, a boot.img file will be created.
+Thats it, you now have compiled a kernel:)
