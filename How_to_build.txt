@@ -22,6 +22,9 @@ You will also need the split_boot script tool to extract a ramdisk from a workin
 Here you might find a working set of tools:
 http://forum.xda-developers.com/showthread.php?t=2319018
 
+Some of these tools could be hard to find. I have therefore put the ones I use the most in an archive at my google-drive.
+You will also find a copy of the ramdisk files initrd.img for both 4.4.2 and 4.4.4 (CM11) kernels.
+Here is the sharing link: https://drive.google.com/file/d/0B2iMg7GOiEtwNWFNb0RoZE1RVUk/view?usp=sharing
 
 Open a terminal in the source folder and apply the following commands:
 sudo su
