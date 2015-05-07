@@ -20,12 +20,12 @@
  
 /dts-v1/;
 /include/ "apq8026-v2.dtsi"
-/include/ "msm8226-sec-matissewifi-r01.dtsi"
+/include/ "msm8226-sec-matissewifi-r00.dtsi"
 
 / {
-	model = "[MATISSE-WIFI-OPEN] Rev-01-MTP-v2";
+	model = "[MATISSE-WIFI-OPEN] Rev-00-MTP-v2";
 	compatible = "qcom,apq8026-mtp", "qcom,apq8026", "qcom,mtp";
-	qcom,msm-id = <0xC708FF01 1 0x20000>;
+	qcom,msm-id = <0xC708FF01 0 0x20000>;
 };
 
 /{
@@ -40,11 +40,6 @@
 	};
 
 };
-
-
-/* Reserve for persistent memory - kernel hard boot */
-/* It's at end of first RAM bank */
-/memreserve/ 0x08300000 0x100000;
 
 &soc {
 	/*Adding node for the SM5502/TSU6721-MUIC I2C QUP Interface*/
