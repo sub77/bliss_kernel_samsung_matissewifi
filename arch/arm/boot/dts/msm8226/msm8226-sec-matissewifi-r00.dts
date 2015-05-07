@@ -41,11 +41,6 @@
 
 };
 
-
-/* Reserve for persistent memory - kernel hard boot */
-/* It's at end of first RAM bank */
-/memreserve/ 0x08300000 0x100000;
-
 &soc {
 	/*Adding node for the SM5502/TSU6721-MUIC I2C QUP Interface*/
         i2c@f9926000 { /* BLSP-1 QUP-3 */
