@@ -710,4 +710,6 @@
 	qcom,dsi-pref-prim-pan = <&dsi2lvds_wxga_vid_r01>;
 };
 
-
+&dsi2lvds_wxga_vid_r01 {
+	qcom,cont-splash-enabled;
+};
