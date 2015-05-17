@@ -103,8 +103,12 @@ extern uint16_t back_cam_fw_version;
 static ssize_t back_camera_type_show(struct device *dev,
 			struct device_attribute *attr, char *buf)
 {
-#if defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
+#if defined(CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_DEGAS_PROJECT)
 	char type[] = "SILICONFILE_SR352\n";
+#elif defined(CONFIG_SEC_ATLANTIC_PROJECT)
+	char type[] = "SONY_IMX219\n";
+#elif defined (CONFIG_SEC_T8_PROJECT)
+	char type[] = "SILICONFILE_SR200PC20\n";
 #else
 	char type[] = "SLSI_S5K4H5YB\n";
 #endif
@@ -115,8 +119,12 @@ static ssize_t back_camera_type_show(struct device *dev,
 static ssize_t front_camera_type_show(struct device *dev,
 			struct device_attribute *attr, char *buf)
 {
-#if defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
+#if defined(CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_DEGAS_PROJECT) || defined (CONFIG_SEC_T8_PROJECT)
 	char cam_type[] = "SILICONFILE_SR130PC20\n";
+#elif defined(CONFIG_SEC_BERLUTI_PROJECT)
+	char cam_type[] = "SLSI_S5K8B1YX\n";
+#elif defined(CONFIG_SEC_ATLANTIC_PROJECT)
+	char cam_type[] = "SLSI_S5K6B2YX\n";
 #else
 	char cam_type[] = "SLSI_S5K6A3YX\n";
 #endif
@@ -150,7 +158,7 @@ ssize_t back_camera_antibanding_store (struct device *dev, struct device_attribu
 	return size;
 }
 
-char cam_fw_ver[25] = "E08QLGI01CH E08QLGI01CH\n";/*VE,8mega_pixel,Qualcomm_isp,SLSI_sensor*/
+char cam_fw_ver[25] = "NULL NULL\n";
 static ssize_t back_camera_firmware_show(struct device *dev,
 			struct device_attribute *attr, char *buf)
 {
@@ -159,16 +167,17 @@ static ssize_t back_camera_firmware_show(struct device *dev,
 	char cam_fw[] = "O13Q0SAGC01 O13Q0SAGC01\n";/*Camsys_module,13mega_pixel,Qualcomm_isp,Sony_sensor*/
 	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
 #elif defined(CONFIG_MACH_S3VE3G_EUR)
-	char cam_fw[] = "B08QTGJ01MI B08QTGJ01MI\n";
-	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
-#elif defined(CONFIG_MACH_VIENNAEUR)
+	return snprintf(buf, sizeof(cam_fw_ver), "%s %s", cam_fw_ver, cam_fw_ver);
+#elif defined(CONFIG_MACH_VIENNAEUR) || defined(CONFIG_SEC_ATLANTIC_PROJECT)
 	char cam_fw[] = "E08QSGG01OC E08QSGG01OC\n";/* Gumi, 8mega_pixel, Qualcomm_isp, Sony_sensor*/
 	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
 #elif defined(CONFIG_MACH_LT03EUR)
 	char cam_fw[] = "E08QSGG01OE E08QSGG01OE\n";
 	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
-#elif  defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
-	char cam_fw_ver[25] = "NULL NULL\n";
+#elif  defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_DEGAS_PROJECT)
+	return snprintf(buf, sizeof(cam_fw_ver), "%s %s", cam_fw_ver, cam_fw_ver);
+#elif defined (CONFIG_SEC_T8_PROJECT)
+	char cam_fw[] = "SR200PC20 N\n";
 	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
 #elif  defined(CONFIG_MACH_AFYONLTE_TMO)
 	char cam_fw[] = "S5K4ECGX N\n";
@@ -182,9 +191,11 @@ static ssize_t back_camera_firmware_show(struct device *dev,
 static ssize_t back_camera_firmware_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t size)
 {
- #if defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
-	char cam_fw_ver[25] = "NULL NULL\n";
- #elif defined(CONFIG_MACH_AFYONLTE_TMO)
+#if defined(CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_DEGAS_PROJECT)
+	char cam_fw_ver[25] = "SR352 N\n";
+#elif defined (CONFIG_SEC_T8_PROJECT)
+	char cam_fw_ver[25] = "SR200PC20 N\n";
+#elif defined(CONFIG_MACH_AFYONLTE_TMO)
 	char cam_fw_ver[25] = "S5K4ECGX N\n";
 #endif
 	CDBG("[FW_DBG] buf : %s\n", buf);
@@ -196,10 +207,14 @@ static ssize_t back_camera_firmware_store(struct device *dev,
 static ssize_t front_camera_firmware_show(struct device *dev,
 			struct device_attribute *attr, char *buf)
 {
- #if defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
+#if defined(CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_DEGAS_PROJECT)  || defined (CONFIG_SEC_T8_PROJECT)
 	char cam_fw[] = "SR130PC20 N\n";
- #elif defined(CONFIG_MACH_AFYONLTE_TMO)
+#elif defined(CONFIG_MACH_AFYONLTE_TMO)
 	char cam_fw[] = "SR030PC50 N\n";
+#elif defined(CONFIG_SEC_BERLUTI_PROJECT)
+	char cam_fw[] = "S5K8B1YX S5K8B1YX\n";
+#elif defined(CONFIG_SEC_ATLANTIC_PROJECT)
+	char cam_fw[] = "S5K6B2YX S5K6B2YX\n";
 #else
 	char cam_fw[] = "S5K6A3YX S5K6A3YX\n";
 #endif
