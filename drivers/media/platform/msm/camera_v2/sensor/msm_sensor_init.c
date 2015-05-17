@@ -167,7 +167,7 @@ static ssize_t back_camera_firmware_show(struct device *dev,
 	char cam_fw[] = "E08QSGG01OE E08QSGG01OE\n";
 	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
 #elif  defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
-	char cam_fw[] = "SR352 N\n";
+	char cam_fw_ver[25] = "NULL NULL\n";
 	return snprintf(buf, sizeof(cam_fw), "%s", cam_fw);
 #elif  defined(CONFIG_MACH_AFYONLTE_TMO)
 	char cam_fw[] = "S5K4ECGX N\n";
@@ -182,7 +182,7 @@ static ssize_t back_camera_firmware_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t size)
 {
  #if defined (CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT)
-	char cam_fw_ver[25] = "SR352 N\n";
+	char cam_fw_ver[25] = "NULL NULL\n";
  #elif defined(CONFIG_MACH_AFYONLTE_TMO)
 	char cam_fw_ver[25] = "S5K4ECGX N\n";
 #endif
